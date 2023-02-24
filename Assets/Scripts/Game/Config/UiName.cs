@@ -9,5 +9,6 @@
 public class UiName
 {
     public const string UI_USER_LOGIN = "UIUserLogin";
+    public const string UI_USER_REGISTER = "UIRegister";
     public const string UI_SET = "UISet";
 }

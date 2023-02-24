@@ -12,29 +12,16 @@ using UnityEngine;
 
 public class UIScene : UIBase
 {
-    private Transform m_HidePageRoot;
+    [HideInInspector]
+    public Transform HidePageRoot;
 
-    private Transform m_ShowPageRoot;
+    [HideInInspector]
+    public Transform ShowPageRoot;
 
     protected override void OnAwake()
     {
         base.OnAwake();
-        m_HidePageRoot = transform.Find("HidePageRoot");
-        m_ShowPageRoot = transform.Find("ShowPageRoot");
+        HidePageRoot = transform.Find("HidePageRoot");
+        ShowPageRoot = transform.Find("ShowPageRoot");
     }
-
-    public void ShowWindow(UIWindow window)
-    {
-        window.gameObject.SetActive(true);
-        window.transform.parent = m_ShowPageRoot;
-        window.OpenUI();
-    }
-
-    public void HideWindow(UIWindow window)
-    {
-        window.gameObject.SetActive(false);
-        window.transform.parent = m_HidePageRoot;
-        window.CloseUI();
-    }
-    
 }

@@ -57,19 +57,4 @@ public class AddScriptsInfo : UnityEditor.AssetModificationProcessor
             File.WriteAllText(path, str);
         }
     }
-    
-    /// <summary>
-    /// 在移动脚本所在文件夹时调用
-    /// </summary>
-    /// <param name="sourcePath"></param>
-    /// <param name="destinationPath"></param>
-    /// <returns></returns>
-    private static AssetMoveResult OnWillMoveAsset(string sourcePath, string destinationPath)
-    {
-        AssetMoveResult assetMoveResult = AssetMoveResult.DidMove;
-
-        // Perform operations on the asset and set the value of 'assetMoveResult' accordingly.
-
-        return assetMoveResult;
-    }
 }

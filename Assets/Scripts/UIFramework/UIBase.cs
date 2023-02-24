@@ -34,25 +34,6 @@ public abstract class UIBase : MonoBehaviour
     }
     #endregion
 
-    #region UI操作方法
-    public void OpenUI()
-    {
-        RegisterEvents();
-        OnOpen();
-    }
-
-    public void CloseUI()
-    {
-        OnClose();
-        UnRegisterEvents();
-    }
-
-    public void DestoryUI()
-    {
-        OnDestroy();
-    }
-    #endregion
-
     #region 虚方法
     protected virtual void OnAwake()
     {
@@ -74,12 +55,12 @@ public abstract class UIBase : MonoBehaviour
 
     }
 
-    protected virtual void OnOpen()
+    public virtual void OnOpen()
     {
 
     }
 
-    protected virtual void OnClose()
+    public virtual void OnClose()
     {
 
     }
@@ -89,12 +70,12 @@ public abstract class UIBase : MonoBehaviour
 
     }
 
-    protected virtual void RegisterEvents()
+    public virtual void RegisterEvents()
     {
 
     }
 
-    protected virtual void UnRegisterEvents()
+    public virtual void UnRegisterEvents()
     {
 
     }
