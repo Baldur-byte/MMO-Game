@@ -13,3 +13,13 @@ public enum SceneType
     Start,
     Game,
 }
+
+public enum AnimatorParameters
+{
+    Idle,
+    Run,
+    Die,
+    Hurt,
+    PhyAttack,
+    Fight,
+}

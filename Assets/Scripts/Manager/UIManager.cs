@@ -34,6 +34,9 @@ public class UIManager : MonoSingleton<UIManager>
     [SerializeField]
     private Slider slider;
 
+    [SerializeField]
+    private TouchArea touchArea;
+
     //private UIFactory factory;
 
     private Dictionary<string, UIWindow> windowDic = new Dictionary<string, UIWindow>();
@@ -50,6 +53,7 @@ public class UIManager : MonoSingleton<UIManager>
         }
 
         DontDestroyOnLoad(this.gameObject);
+        DontDestroyOnLoad(GameObject.Find("EventSystem"));
     }
 
     public void Loading(float progress)
@@ -134,4 +138,9 @@ public class UIManager : MonoSingleton<UIManager>
         }
     }
     #endregion
+
+    public void InitTouchArea(Interact interact)
+    {
+        touchArea.SetActiveInteract(interact);
+    }
 }
