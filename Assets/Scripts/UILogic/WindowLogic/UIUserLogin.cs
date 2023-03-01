@@ -52,7 +52,10 @@ public class UIUserLogin : UIWindow
     #region 按钮事件
     private void LoginButton_clicked()
     {
-        SceneLoadManager.Instance.LoadSceneAsync(SceneType.Game);
+        if (checkPlayerInfo())
+        {
+            SceneLoadManager.Instance.LoadSceneAsync(SceneType.Game);
+        }
     }
 
     private void RegisterButton_clicked()
@@ -62,7 +65,13 @@ public class UIUserLogin : UIWindow
 
     private void CloseButton_clicked()
     {
-        UIManager.Instance.CloseWindow(this);
+        Application.Quit();
     }
     #endregion
+
+    private bool checkPlayerInfo()
+    {
+        return true;
+        return false;
+    }
 }

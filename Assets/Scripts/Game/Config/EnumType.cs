@@ -23,3 +23,13 @@ public enum AnimatorParameters
     PhyAttack,
     Fight,
 }
+
+public enum WindowAnimType
+{
+    None,
+}
+
+public enum HeadIconType
+{
+    None,
+}

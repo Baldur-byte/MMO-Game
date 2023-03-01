@@ -6,29 +6,59 @@
 功能：Nothing
 /**********************************************************/
 
-/**********************************************************
-文件：UIRegisterWindow.cs
-作者：auus
-邮箱：#Email#
-日期：2023/02/23 20:51:32
-功能：Nothing
-/**********************************************************/
-
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
-public class UIRegisterWindow : UIWindow
+public class UIUserRegister : UIWindow
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField]
+    private Button backToLoginButton;
+
+    [SerializeField]
+    private Button registerButton;
+
+    [SerializeField]
+    private Button closeButton;
+
+    protected override void OnAwake()
     {
-        
+        base.OnAwake();
     }
 
-    // Update is called once per frame
-    void Update()
+    public override void RegisterEvents()
     {
-        
+        backToLoginButton.onClick.AddListener(BacktoLoginButton_clicked);
+        registerButton.onClick.AddListener(RegisterButton_clicked);
+        closeButton.onClick.AddListener(CloseButton_clicked);
+    }
+
+    public override void UnRegisterEvents()
+    {
+        backToLoginButton.onClick.RemoveListener(BacktoLoginButton_clicked);
+        registerButton.onClick.RemoveListener(RegisterButton_clicked);
+        closeButton.onClick.RemoveListener(CloseButton_clicked);
+    }
+
+    #region 按钮事件
+    private void BacktoLoginButton_clicked()
+    {
+        UIManager.Instance.OpenWindow(UiName.UI_USER_LOGIN);
+    }
+
+    private void RegisterButton_clicked()
+    {
+        UIManager.Instance.OpenWindow(UiName.UI_USER_REGISTER);
+    }
+
+    private void CloseButton_clicked()
+    {
+        Application.Quit();
+    }
+    #endregion
+
+    private bool checkPlayerInfo()
+    {
+        return true;
+        return false;
     }
 }

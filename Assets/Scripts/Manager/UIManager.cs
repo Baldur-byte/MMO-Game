@@ -41,6 +41,8 @@ public class UIManager : MonoSingleton<UIManager>
 
     private Dictionary<string, UIWindow> windowDic = new Dictionary<string, UIWindow>();
 
+    private List<UIWindow> showingWindows = new List<UIWindow>();
+
     private void Awake()
     {
         loading.gameObject.SetActive(false);
@@ -83,9 +85,9 @@ public class UIManager : MonoSingleton<UIManager>
         {
             if(async.progress >= slider.value)
             {
-                slider.value += 0.01f;
+                slider.value = async.progress / 0.9f;
             }
-            if(slider.value == 0.9f)
+            if(async.progress == 0.9f)
             {
                 async.allowSceneActivation = true;
             }
@@ -95,16 +97,20 @@ public class UIManager : MonoSingleton<UIManager>
 
         if (curSceneType != SceneType.None && curSceneType != target)
         {
+            curScene.OnClose();
+            curScene.UnRegisterEvents();
             Destroy(curScene.gameObject);
         }
 
         curScene = ResourceManager.Instance.Instantiate(ResourcesPath.SCENE_PATH + target.ToString() + "Scene", transform).GetComponent<UIScene>();
 
         curSceneType = target;
+        curScene.RegisterEvents();
+        curScene.OnOpen();
     }
 
     #region UI操作方法
-    public void OpenWindow(string target, bool isStorePool = true)
+    public void OpenWindow(string target, WindowAnimType windowAnimType = WindowAnimType.None, bool isStorePool = true)
     {
         UIWindow window = null;
         if (!windowDic.ContainsKey(target))
@@ -112,15 +118,34 @@ public class UIManager : MonoSingleton<UIManager>
             window = ResourceManager.Instance.Instantiate(ResourcesPath.WINDOW_PATH + target).GetComponent<UIWindow>();
             windowDic[target] = window;
         }
-        window.gameObject.transform.parent = curScene.ShowPageRoot;
+        else
+        {
+            window = windowDic[target];
+        }
 
-        window.gameObject.transform.localPosition = Vector3.zero;
-        window.gameObject.transform.localScale = Vector3.one;
-        window.gameObject.transform.rotation = Quaternion.identity;
+        if (showingWindows.Contains(window))
+        {
+            reOpenWindow(window);
+        }
+        else
+        {
+            window.gameObject.transform.parent = curScene.ShowPageRoot;
 
-        window.RegisterEvents();
-        window.OnOpen();
-        window.gameObject.SetActive(true);
+            window.gameObject.transform.localPosition = Vector3.zero;
+            window.gameObject.transform.localScale = Vector3.one;
+            window.gameObject.transform.rotation = Quaternion.identity;
+
+            window.RegisterEvents();
+            window.OnOpen();
+            window.gameObject.SetActive(true);
+
+            while (showingWindows.Count > 0)
+            {
+                CloseWindow(showingWindows[0]);
+            }
+
+            showingWindows.Add(window);
+        }
     }
 
     public void CloseWindow(UIWindow window, bool isStorePool = true)
@@ -128,6 +153,7 @@ public class UIManager : MonoSingleton<UIManager>
         window.OnClose();
         window.UnRegisterEvents();
         window.gameObject.SetActive(false);
+        showingWindows.Remove(window);
         if (!windowDic.ContainsValue(window) || !isStorePool)
         {
             Destroy(window.gameObject);
@@ -137,10 +163,28 @@ public class UIManager : MonoSingleton<UIManager>
             window.gameObject.transform.parent = curScene.HidePageRoot;
         }
     }
+
+    private void reOpenWindow(UIWindow window)
+    {
+        window.OnClose();
+        window.UnRegisterEvents();
+        window.gameObject.transform.parent = curScene.ShowPageRoot;
+        window.gameObject.transform.localPosition = Vector3.zero;
+        window.gameObject.transform.localScale = Vector3.one;
+        window.gameObject.transform.rotation = Quaternion.identity;
+        window.RegisterEvents();
+        window.OnOpen();
+        window.gameObject.SetActive(true);
+    }
     #endregion
 
     public void InitTouchArea(Interact interact)
     {
         touchArea.SetActiveInteract(interact);
+    }
+
+    public UIScene GetCurSceneUI()
+    {
+        return curScene;
     }
 }

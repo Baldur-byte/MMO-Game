@@ -6,11 +6,14 @@
 功能：Nothing
 /**********************************************************/
 
+using UnityEditor.AssetImporters;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class UIGameScene : UIScene
 {
+    private UIPlayerInfo playerInfo;
+
     #region 按钮
     [SerializeField]
     private Button buttonHeadIcon;
@@ -86,12 +89,10 @@ public class UIGameScene : UIScene
     private Button buttonSkill_6;
     #endregion
 
-    private GameSceneController gameSceneController;
-
     #region 继承方法
     protected override void OnAwake()
     {
-
+        base.OnAwake();
     }
 
     protected override void OnStart()
@@ -111,7 +112,7 @@ public class UIGameScene : UIScene
 
     public override void OnOpen()
     {
-
+        ShowPlayerInfo();
     }
 
     public override void OnClose()
@@ -362,4 +363,12 @@ public class UIGameScene : UIScene
     }
     #endregion
     #endregion
+
+    public void ShowPlayerInfo( )
+    {
+        //playerInfo.ShowHeadIcon(sprite);
+        playerInfo.ShowName(DataManager.PlayerData.Name);
+        playerInfo.ShowHealth(DataManager.PlayerData.Health / ConfigData.MaxHealth);
+        playerInfo.ShowMagic(DataManager.PlayerData.Magic / ConfigData.MaxMagic);
+    }
 }

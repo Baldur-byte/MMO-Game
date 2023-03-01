@@ -1411,6 +1411,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7988033051379048684}
+  - component: {fileID: 5121001428725922145}
   m_Layer: 5
   m_Name: PlayerInfo
   m_TagString: Untagged
@@ -1444,6 +1445,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &5121001428725922145
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2407642148362233427}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e134d9b70284e244592195846a5851f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  headIcon: {fileID: 1623823727584527332}
+  playerName: {fileID: 8088890015367213903}
+  health: {fileID: 1179510975892263496}
+  magic: {fileID: 559721790606186355}
 --- !u!1 &3605079052942097601
 GameObject:
   m_ObjectHideFlags: 0
