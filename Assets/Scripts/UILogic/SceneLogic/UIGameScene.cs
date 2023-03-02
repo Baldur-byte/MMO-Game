@@ -367,8 +367,8 @@ public class UIGameScene : UIScene
     public void ShowPlayerInfo( )
     {
         //playerInfo.ShowHeadIcon(sprite);
-        playerInfo.ShowName(DataManager.PlayerData.Name);
-        playerInfo.ShowHealth(DataManager.PlayerData.Health / ConfigData.MaxHealth);
-        playerInfo.ShowMagic(DataManager.PlayerData.Magic / ConfigData.MaxMagic);
+        //playerInfo.ShowName(DataManager.PlayerData.Name);
+        //playerInfo.ShowHealth(DataManager.PlayerData.Health / ConfigData.MaxHealth);
+        //playerInfo.ShowMagic(DataManager.PlayerData.Magic / ConfigData.MaxMagic);
     }
 }

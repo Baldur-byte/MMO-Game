@@ -16,30 +16,40 @@ public class GameSceneController : SceneController, Interact
     [SerializeField]
     private CameraController cameraController;
 
-    [SerializeField]
     private PlayerController playerController;
+
+    private MonsterController monsterController;
 
     private UIGameScene gameSceneUI;
 
     private Vector2 lastPointerPostion;
 
+    private bool isDraging = false;
+
     void Start()
     {
         UIManager.Instance.InitTouchArea(this);
+
         gameSceneUI = UIManager.Instance.GetCurSceneUI() as UIGameScene;
+
         cameraController.ResetCamera();
+
+        playerController = gameObject.GetComponent<PlayerController>();
         playerController.CreatePlayer();
+
+        monsterController = gameObject.GetComponent<MonsterController>();
+        monsterController.CreateMonsterRandom(10);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        cameraController.CameraFallow(playerController.gameObject.transform);
+        cameraController.CameraFallow(playerController.RolePos());
     }
 
     #region 交互
     public void OnDrag(PointerEventData eventData)
     {
+        isDraging = true;
         Debug.Log("OnDrag");
         if (eventData.button == PointerEventData.InputButton.Right)
         {
@@ -74,16 +84,17 @@ public class GameSceneController : SceneController, Interact
         {
             cameraController.CameraZoomWithAnim(-1);
         }
-        else if (eventData.button == PointerEventData.InputButton.Left)
+        else if (eventData.button == PointerEventData.InputButton.Left && !isDraging)
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
             if (Physics.Raycast(ray, out hit, Mathf.Infinity, 1 << LayerMask.NameToLayer(LayerName.Ground)) && EventSystem.current.IsPointerOverGameObject() && eventData.pointerEnter.name == "TouchArea(Panel)")
             {
-                playerController.Run(hit.point);
+                playerController.MoveTo(hit.point);
             }
         }
+        isDraging = false;
     }
     #endregion
 

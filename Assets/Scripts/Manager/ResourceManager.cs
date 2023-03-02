@@ -6,7 +6,6 @@
 功能：Nothing
 /**********************************************************/
 
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -45,9 +44,13 @@ public class ResourceManager : MonoSingleton<ResourceManager>
         return resultObject;
     }
 
-    public T CreatePrefab<T>(string path, Transform parent) where T : MonoBehaviour
+    public T CreatePrefab<T>(string InPrefabPath, string name = "Prefab", Transform InParent = null) where T : MonoBehaviour
     {
-        GameObject obj = Instantiate(path, parent);
+        GameObject obj = Instantiate(InPrefabPath, InParent);
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
+        obj.name = name;
         T t = obj.GetComponent<T>();
         if (t != null)
         {

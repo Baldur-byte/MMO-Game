@@ -1,11 +1,11 @@
 /**********************************************************
-文件：PlayerData.cs
+文件：PlayerInfo.cs
 作者：auus
 邮箱：#Email#
 日期：2023/02/28 20:29:18
 功能：Nothing
 /**********************************************************/
 
-public class PlayerData : RoleInfo
+public class PlayerInfo : RoleInfo
 {
 }

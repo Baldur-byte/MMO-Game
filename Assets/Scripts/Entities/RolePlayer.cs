@@ -2,25 +2,23 @@
 文件：RolePlayer.cs
 作者：auus
 邮箱：#Email#
-日期：2023/03/01 20:26:57
+日期：2023/03/02 14:33:52
 功能：Nothing
 /**********************************************************/
 
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using UnityEngine;
 
-public class RolePlayer : MonoBehaviour
+public class RolePlayer : IRole
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    private PlayerInfo playerInfo;
 
-    // Update is called once per frame
-    void Update()
+    public void Init(PlayerInfo info)
     {
-        
+        playerInfo = info;
+        transform.position = ConfigData.PlayerBornPos;
+        CreateRole("Model/Cike", playerInfo.Name);
     }
 }
