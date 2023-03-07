@@ -16,4 +16,9 @@ public class CommonMethod
     {
         return Vector3.Distance(new Vector3(from.x, 0, from.z), new Vector3(to.x, 0, to.z));
     }
+
+    public static Vector3 StandardlizedVectorY(Vector3 vector, float y = 0)
+    {
+        return new Vector3(vector.x, y, vector.z);
+    }
 }

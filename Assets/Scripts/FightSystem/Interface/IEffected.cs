@@ -12,12 +12,12 @@ using UnityEngine;
 
 public interface IEffected
 {
-    public abstract void None();
-    public abstract void Fired();
-    public abstract void Frozen();
-    public abstract void SlowDown();
-    public abstract void SpeedUp();
-    public abstract void Resume();
-    public abstract void Hurt();
-    public abstract void Die();
+    void None();
+    void Fired();
+    void Frozen();
+    void SlowDown();
+    void SpeedUp();
+    void Resume();
+    void Hurt();
+    void Die();
 }

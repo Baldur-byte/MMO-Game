@@ -20,6 +20,7 @@ public class IndividualOfEffect : IEffectBase
 
     }
 
+
     public override void isInRange()
     {
         throw new System.NotImplementedException();
