@@ -20,7 +20,7 @@ public class MonsterController : RoleController
     public void CreateMonster(MonsterInfo info)
     {
         RoleMonster monster = ResourceManager.Instance.CreatePrefab<RoleMonster>("Prefabs/Role/Role");
-        monster.Init(info);
+        monster.Init(info.Name, info.BornPos);
         roleMonsters.Add(monster);
     }
 

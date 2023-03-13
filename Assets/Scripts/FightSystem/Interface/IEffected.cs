@@ -12,6 +12,7 @@ using UnityEngine;
 
 public interface IEffected
 {
+    Vector3 position();
     void None();
     void Fired();
     void Frozen();

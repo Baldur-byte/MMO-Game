@@ -8,6 +8,7 @@
 
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public abstract class IRole : MonoBehaviour
@@ -22,6 +23,10 @@ public abstract class IRole : MonoBehaviour
 
     private bool isRuning = false;
 
+    private bool isDead = false;
+
+    private bool isAttacking = false;
+
     private Animator m_Animator;
 
     private AnimatorStateInfo stateInfo;
@@ -31,6 +36,10 @@ public abstract class IRole : MonoBehaviour
     private Quaternion rotationTarget;
 
     private bool isInitialized = false;
+
+    private RoleHP showHP;
+
+    private float destoryTime = 5f;
 
     protected void CreateRole(string path, string name)
     {
@@ -46,16 +55,32 @@ public abstract class IRole : MonoBehaviour
         positionTarget = obj.transform.position;
         rotationTarget = obj.transform.rotation;
 
+        showHP = transform.Find("HP").GetComponent<RoleHP>();
+
         isInitialized = true;
     }
 
     protected virtual void Update()
     {
         if (!isInitialized) return;
-        stateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
-        if (stateInfo.normalizedTime > 1 && stateInfo.IsTag("Attack"))
+
+        if (isDead)
         {
+            destoryTime -= Time.deltaTime;
+            if(destoryTime < 0)
+            {
+                gameObject.SetActive(false);
+                Destroy(this);
+            }
+            return;
+        }
+
+        stateInfo = m_Animator.GetCurrentAnimatorStateInfo(0);
+        if (stateInfo.normalizedTime >= 1 && stateInfo.IsTag("Attack"))
+        {
+            isAttacking = false;
             m_Animator.SetInteger(AnimatorParameters.PhyAttack.ToString(), 0);
+            Debug.Log(stateInfo.normalizedTime);
         }
 
         if (CommonMethod.GetHorizonDistance(transform.position, positionTarget) >= 0.1f && positionTarget != Vector3.zero)
@@ -81,11 +106,15 @@ public abstract class IRole : MonoBehaviour
             m_RotateSpeed += 0.5f;
             transform.rotation = Quaternion.Lerp(transform.rotation, rotationTarget, m_RotateSpeed * Time.deltaTime);
         }
+
+        //血条面向摄像头
+        showHP.transform.rotation = Quaternion.LookRotation(showHP.transform.position - Camera.main.transform.position);
     }
 
     #region 动作
     public void Run(Vector3 target)
     {
+        if(isDead) return;
         positionTarget = target;
         rotationTarget = Quaternion.LookRotation(new Vector3(target.x - transform.position.x, 0, target.z - transform.position.z));
         m_RotateSpeed = 0.5f;
@@ -93,29 +122,35 @@ public abstract class IRole : MonoBehaviour
 
     public void Hurt()
     {
+        if (isDead) return;
         Debug.Log("Hurt");
         Fight();
         m_Animator.SetTrigger(AnimatorParameters.Hurt.ToString());
     }
 
-    public void Attack(int attackType)
+    public virtual bool Attack(int attackType)
     {
+        if (isDead) return false;
+        if (isAttacking) return false;
+        isAttacking = true;
         Debug.Log("Attack" + attackType);
         Fight();
         m_Animator.SetInteger(AnimatorParameters.PhyAttack.ToString(), attackType);
-        //m_Animator.
-        //m_Animator.SetInteger(AnimatorParameters.PhyAttack.ToString(), 0);
+        return true;
     }
 
     public void Die()
     {
+        if (isDead) return;
         Debug.Log("Die");
         Fight();
         m_Animator.SetTrigger(AnimatorParameters.Die.ToString());
+        isDead = true;
     }
 
     public void Fight()
     {
+        if (isDead) return;
         if (isFighting) return;
         isFighting = true;
         m_Animator.SetBool(AnimatorParameters.Fight.ToString(), isFighting);
@@ -123,6 +158,7 @@ public abstract class IRole : MonoBehaviour
 
     public void ExitFight()
     {
+        if (isDead) return;
         if (!isFighting) return;
         isFighting = false;
         m_Animator.SetBool(AnimatorParameters.Fight.ToString(), isFighting);
@@ -130,22 +166,34 @@ public abstract class IRole : MonoBehaviour
 
     public void LevelUp(int value)
     {
-
+        if (isDead) return;
     }
 
     public void GetExp(int value)
     {
-
+        if (isDead) return;
     }
 
     public void UseSkill(int value)
     {
-
+        if (isDead) return;
     }
     #endregion
+
+    public void ShowHP(float value)
+    {
+        showHP.Refresh(value);
+    }
+
+    public void HideHP()
+    {
+        showHP.gameObject.SetActive(false);
+    }
 
     public bool isMoving()
     {
         return isRuning;
     }
+
+
 }

@@ -10,19 +10,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RoleMonster : IRole
+public class RoleMonster : IRole, IEffected
 {
-    private MonsterInfo monsterInfo;
-
     private float waitTime = 0f;
 
     private bool isInitilized = false;
 
-    public void Init(MonsterInfo info)
+    private Vector3 bornPos;
+
+    public void Init(string name, Vector3 bornPos)
     {
-        monsterInfo = info;
-        transform.position = info.BornPos;
-        CreateRole("Model/Qinbing", monsterInfo.Name);
+        this.bornPos = bornPos;
+        transform.position = bornPos;
+        CreateRole("Model/Qinbing", name);
+        gameObject.tag = "Monster";
 
         isInitilized = true;
     }
@@ -46,8 +47,46 @@ public class RoleMonster : IRole
     {
         float offsetX = Random.Range(-1, 1) * ConfigData.patrolRadius;
         float offsetZ = Random.Range(-1, 1) * ConfigData.patrolRadius;
-        Vector3 target = new Vector3(monsterInfo.BornPos.x + offsetX, monsterInfo.BornPos.y, monsterInfo.BornPos.z + offsetZ);
+        Vector3 target = new Vector3(bornPos.x + offsetX, bornPos.y, bornPos.z + offsetZ);
         Run(target);
-        Debug.Log(target);
     }
+
+    public Vector3 position()
+    {
+        return transform.position;
+    }
+
+    #region 受技能影响
+
+    public void Fired()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Frozen()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void None()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SlowDown()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SpeedUp()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    #endregion
 }

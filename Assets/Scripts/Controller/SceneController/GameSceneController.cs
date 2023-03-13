@@ -13,6 +13,14 @@ using UnityEngine.EventSystems;
 
 public class GameSceneController : SceneController, Interact
 {
+    #region 单例
+    private static GameSceneController instance;
+    public static GameSceneController Instance
+    {
+        get { return instance; }
+    }
+    #endregion
+
     [SerializeField]
     private CameraController cameraController;
 
@@ -25,6 +33,11 @@ public class GameSceneController : SceneController, Interact
     private Vector2 lastPointerPostion;
 
     private bool isDraging = false;
+
+    void Awake()
+    {
+        instance = this;
+    }
 
     void Start()
     {
@@ -43,7 +56,19 @@ public class GameSceneController : SceneController, Interact
 
     void Update()
     {
+        if (!playerController.IsPlayerAlive()) return;
         cameraController.CameraFallow(playerController.RolePos());
+
+        //键盘输入
+        if (Input.GetKeyDown(KeyCode.H))
+        {
+            playerController.Hurt(5);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            playerController.Attack(1);
+        }
     }
 
     #region 交互
@@ -67,13 +92,14 @@ public class GameSceneController : SceneController, Interact
     public void OnPointerDown(PointerEventData eventData)
     {
         Debug.Log("OnPointerDown");
-        if(eventData.button == PointerEventData.InputButton.Right)
+        switch (eventData.button)
         {
-            cameraController.CameraZoomWithAnim(1);
-        }
-        else if(eventData.button == PointerEventData.InputButton.Left)
-        {
-            lastPointerPostion = eventData.position;
+            case PointerEventData.InputButton.Left:
+                lastPointerPostion = eventData.position;
+                break;
+            case PointerEventData.InputButton.Right:
+                cameraController.CameraZoomWithAnim(1);
+                break;
         }
     }
 
@@ -98,8 +124,8 @@ public class GameSceneController : SceneController, Interact
     }
     #endregion
 
-    private void Test()
+    public void PlayerAttack()
     {
-
+        playerController.Attack(1);
     }
 }

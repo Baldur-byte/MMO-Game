@@ -6,6 +6,8 @@
 功能：Nothing
 /**********************************************************/
 
+using UnityEngine;
+
 public class RoleInfo
 {
     protected int roleId = 0;
@@ -13,7 +15,10 @@ public class RoleInfo
     protected string roleDescription = "nothing";
     protected int roleHealth = 100;
     protected int roleMagic = 100;
-    protected int roleLevel = 0;
+    protected int curHealth = 100;
+    protected int curMagic = 100;
+    protected int curLevel = 0;
+    private Vector3 bornPos;
 
     public string Name
     {
@@ -51,7 +56,7 @@ public class RoleInfo
         }
     }
 
-    public int Health
+    public int MaxHealth
     {
         get
         {
@@ -63,7 +68,7 @@ public class RoleInfo
         }
     }
 
-    public int Magic
+    public int MaxMagic
     {
         get
         {
@@ -75,15 +80,51 @@ public class RoleInfo
         }
     }
 
-    public int Level
+    public int CurHealth
     {
         get
         {
-            return roleLevel;
+            return curHealth;
         }
         set
         {
-            roleLevel = value;
+            curHealth = value;
+        }
+    }
+
+    public int CurMagic
+    {
+        get
+        {
+            return curMagic;
+        }
+        set
+        {
+            curMagic = value;
+        }
+    }
+
+    public int CurLevel
+    {
+        get
+        {
+            return curLevel;
+        }
+        set
+        {
+            curLevel = value;
+        }
+    }
+
+    public Vector3 BornPos
+    {
+        get
+        {
+            return bornPos;
+        }
+        set
+        {
+            bornPos = value;
         }
     }
 }

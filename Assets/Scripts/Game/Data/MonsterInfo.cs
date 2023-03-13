@@ -13,17 +13,5 @@ using UnityEngine;
 public class MonsterInfo : RoleInfo
 {
 
-    private Vector3 bornPos;
-
-    public Vector3 BornPos
-    {
-        get
-        {
-            return bornPos;
-        }
-        set
-        {
-            bornPos = value;
-        }
-    }
+    
 }

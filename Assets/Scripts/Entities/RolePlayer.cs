@@ -11,14 +11,52 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class RolePlayer : IRole
+public class RolePlayer : IRole, IEffected
 {
-    private PlayerInfo playerInfo;
-
-    public void Init(PlayerInfo info)
+    public void Init(string name)
     {
-        playerInfo = info;
         transform.position = ConfigData.PlayerBornPos;
-        CreateRole("Model/Cike", playerInfo.Name);
+        CreateRole("Model/Cike", name);
+        gameObject.tag = "Player";
     }
+
+    public Vector3 position()
+    {
+        return transform.position;
+    }
+
+    #region 受技能影响
+
+    public void Fired()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Frozen()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void None()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void Resume()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SlowDown()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void SpeedUp()
+    {
+        throw new System.NotImplementedException();
+    }
+
+
+    #endregion
 }

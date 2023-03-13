@@ -10,9 +10,11 @@ using UnityEngine;
 
 public class IndividualOfEffect : IEffectBase
 {
-    private EffectProperties EffectProperties;
+    private SectorDetect detect;
+
     public IndividualOfEffect(EffectProperties properties) : base(properties)
     {
+        detect = new SectorDetect(_properties.Radius);
     }
 
     public override void Effect(IEffected effected)
