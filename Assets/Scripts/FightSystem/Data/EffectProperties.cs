@@ -10,12 +10,12 @@ using System.Collections.Generic;
 
 public struct EffectProperties
 {
-    public List<Statuses> Statuses { get; private set; }
+    public List<StateType> Statuses { get; private set; }
     public List<EffectTarget> Targets { get; private set; }
 
     public float Radius { get; private set; }
 
-    public EffectProperties(List<Statuses> statuses, List<EffectTarget> targets, float radius)
+    public EffectProperties(List<StateType> statuses, List<EffectTarget> targets, float radius)
     {
         Statuses = statuses;
         Targets = targets;

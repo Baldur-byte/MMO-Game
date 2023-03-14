@@ -41,6 +41,34 @@ public abstract class IRole : MonoBehaviour
 
     private float destoryTime = 5f;
 
+    public RoleInfo roleInfo { get; private set; }
+
+    public IState curState { get; private set; }
+
+    public List<StateType> States { get; set; }
+
+    protected void CreateRole(string path, RoleInfo info)
+    {
+        characterController = GetComponent<CharacterController>();
+        GameObject obj = ResourceManager.Instance.Instantiate(path, transform.Find("Container"));
+        obj.transform.localPosition = Vector3.zero;
+        obj.transform.localRotation = Quaternion.identity;
+        obj.transform.localScale = Vector3.one;
+        obj.name = name;
+        m_Animator = obj.GetComponent<Animator>();
+        m_Animator.SetBool(AnimatorParameters.Fight.ToString(), isFighting);
+
+        positionTarget = obj.transform.position;
+        rotationTarget = obj.transform.rotation;
+
+        showHP = transform.Find("HP").GetComponent<RoleHP>();
+
+        curState = new NormalState();
+        roleInfo = info;
+
+        isInitialized = true;
+    }
+
     protected void CreateRole(string path, string name)
     {
         characterController = GetComponent<CharacterController>();
@@ -56,6 +84,8 @@ public abstract class IRole : MonoBehaviour
         rotationTarget = obj.transform.rotation;
 
         showHP = transform.Find("HP").GetComponent<RoleHP>();
+
+        curState = new NormalState();
 
         isInitialized = true;
     }
@@ -109,6 +139,7 @@ public abstract class IRole : MonoBehaviour
 
         //血条面向摄像头
         showHP.transform.rotation = Quaternion.LookRotation(showHP.transform.position - Camera.main.transform.position);
+        showHP.Refresh((float)roleInfo.CurHealth / (float)roleInfo.MaxHealth);
     }
 
     #region 动作
@@ -180,16 +211,11 @@ public abstract class IRole : MonoBehaviour
     }
     #endregion
 
-    public void ShowHP(float value)
+    public bool IsAlive()
     {
-        showHP.Refresh(value);
+        return roleInfo.CurHealth > 0;
     }
-
-    public void HideHP()
-    {
-        showHP.gameObject.SetActive(false);
-    }
-
+    
     public bool isMoving()
     {
         return isRuning;

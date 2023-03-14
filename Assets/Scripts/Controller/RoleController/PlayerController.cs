@@ -9,27 +9,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using static UnityEditor.Experimental.GraphView.GraphView;
 using static UnityEngine.GraphicsBuffer;
 
 public class PlayerController : RoleController
 {
     private RolePlayer _player;
 
-    private PlayerInfo _playerInfo;
-
     public void CreatePlayer()
     {
-        _playerInfo = new PlayerInfo();
+        PlayerInfo _playerInfo = new PlayerInfo();
 
         _player = ResourceManager.Instance.CreatePrefab<RolePlayer>("Prefabs/Role/Role");
         _player.Init(_playerInfo.Name);
 
         _attackTargets = new List<IEffected>();
-    }
-
-    public bool IsPlayerAlive()
-    {
-        return _playerInfo.CurHealth > 0;
     }
 
     public void Update()
@@ -50,16 +44,7 @@ public class PlayerController : RoleController
 
     public void Hurt(int damage)
     {
-        _playerInfo.CurHealth -= damage;
-        if (_playerInfo.CurHealth <= 0)
-        {
-            _player.Die();
-        }
-        else
-        {
-            _player.Hurt();
-            _player.ShowHP((float)_playerInfo.CurHealth / (float)_playerInfo.MaxHealth);
-        }
+        _player.Hurt();
     }
 
     //添加攻击间隔的判定，避免一次动画多次伤害

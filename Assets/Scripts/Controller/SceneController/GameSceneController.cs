@@ -56,7 +56,6 @@ public class GameSceneController : SceneController, Interact
 
     void Update()
     {
-        if (!playerController.IsPlayerAlive()) return;
         cameraController.CameraFallow(playerController.RolePos());
 
         //键盘输入
