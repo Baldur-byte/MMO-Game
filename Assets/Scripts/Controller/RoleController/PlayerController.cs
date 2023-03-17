@@ -23,7 +23,7 @@ public class PlayerController : RoleController
         _player = ResourceManager.Instance.CreatePrefab<RolePlayer>("Prefabs/Role/Role");
         _player.Init(_playerInfo.Name);
 
-        _attackTargets = new List<IEffected>();
+        
     }
 
     public void Update()
@@ -53,13 +53,7 @@ public class PlayerController : RoleController
         if (_player.Attack(attackType))//攻击成功
         {
             TriangleDetect detect = new TriangleDetect(5, 10);
-            foreach (IEffected target in _attackTargets)
-            {
-                if (detect.IsInRange(_player.transform, target.position()))
-                {
-                    target.Frozen();
-                }
-            }
+            
             //播放特效
 
             //进行技能范围检验

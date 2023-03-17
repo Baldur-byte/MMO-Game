@@ -11,7 +11,7 @@ using System.Collections.Generic;
 using System.Data;
 using UnityEngine;
 
-public class RolePlayer : IRole, IEffected
+public class RolePlayer : IRole
 {
     public void Init(string name)
     {

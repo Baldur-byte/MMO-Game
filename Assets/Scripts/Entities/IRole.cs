@@ -43,10 +43,6 @@ public abstract class IRole : MonoBehaviour
 
     public RoleInfo roleInfo { get; private set; }
 
-    public IState curState { get; private set; }
-
-    public List<StateType> States { get; set; }
-
     protected void CreateRole(string path, RoleInfo info)
     {
         characterController = GetComponent<CharacterController>();
@@ -63,7 +59,6 @@ public abstract class IRole : MonoBehaviour
 
         showHP = transform.Find("HP").GetComponent<RoleHP>();
 
-        curState = new NormalState();
         roleInfo = info;
 
         isInitialized = true;
@@ -84,8 +79,6 @@ public abstract class IRole : MonoBehaviour
         rotationTarget = obj.transform.rotation;
 
         showHP = transform.Find("HP").GetComponent<RoleHP>();
-
-        curState = new NormalState();
 
         isInitialized = true;
     }

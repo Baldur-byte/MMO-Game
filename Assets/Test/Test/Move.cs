@@ -13,6 +13,9 @@ using UnityEngine;
 public class Move : MonoBehaviour
 {
     private bool isMove = false;
+
+    public GameObject test;
+
     public void Update()
     {
         if (Input.GetKeyDown(KeyCode.E))
