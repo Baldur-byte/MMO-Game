@@ -1,12 +1,12 @@
 /**********************************************************
-文件：Effect.cs
+文件：AddStatusEffect.cs
 作者：auus
 邮箱：#Email#
-日期：2023/03/17 14:46:37
+日期：2023/03/23 14:21:47
 功能：Nothing
 /**********************************************************/
 
-public abstract class Effect
+public class AddStatusEffect : Effect
 {
-    public EffectTriggerType TriggerType { get; set; }
+    
 }

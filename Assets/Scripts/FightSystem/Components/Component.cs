@@ -12,6 +12,8 @@ public class Component
 {
     private bool enable = false;
 
+    public virtual bool DefaultEnable { get; set; } = true;
+
     public bool IsDisposed { get; set; }
 
     public bool Enable 
@@ -31,13 +33,27 @@ public class Component
     /// </summary>
     public Entity Entity { get; set; }
 
+    public T GetEntity<T>() where T : Entity
+    {
+        return Entity as T;
+    }
+
     #region 组件的生命周期
     public virtual void Awake()
     {
 
     }
+    public virtual void Awake(object initData)
+    {
+
+    }
 
     public virtual void Start()
+    {
+
+    }
+
+    public virtual void Start(object initData)
     {
 
     }
@@ -79,6 +95,7 @@ public class Component
     #region 公共接口
     public T Publish<T>(T TEvent) where T : class
     {
+        Entity.Publish(TEvent);
         return TEvent;
     }
     #endregion

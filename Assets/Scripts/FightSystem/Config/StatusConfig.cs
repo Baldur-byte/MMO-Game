@@ -1,12 +1,15 @@
 /**********************************************************
-文件：Effect.cs
+文件：StatusConfig.cs
 作者：auus
 邮箱：#Email#
-日期：2023/03/17 14:46:37
+日期：2023/03/21 15:34:24
 功能：Nothing
 /**********************************************************/
 
-public abstract class Effect
+/// <summary>
+/// 状态配置文件
+/// </summary>
+public class StatusConfig
 {
-    public EffectTriggerType TriggerType { get; set; }
+    public string ID { get; set; }
 }

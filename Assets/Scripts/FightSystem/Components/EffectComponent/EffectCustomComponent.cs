@@ -1,12 +1,15 @@
 /**********************************************************
-文件：Effect.cs
+文件：EffectCustomComponent.cs
 作者：auus
 邮箱：#Email#
-日期：2023/03/17 14:46:37
+日期：2023/03/27 20:57:49
 功能：Nothing
 /**********************************************************/
 
-public abstract class Effect
+/// <summary>
+/// 自定义效果组件
+/// </summary>
+public class EffectCustomComponent : Component
 {
-    public EffectTriggerType TriggerType { get; set; }
+    
 }

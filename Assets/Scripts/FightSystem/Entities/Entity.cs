@@ -120,6 +120,7 @@ public abstract partial class Entity
         }
     }
 
+    #region 处理子组件
     public T AddComponent<T>() where T : Component
     {
         var component = Activator.CreateInstance<T>();
@@ -130,7 +131,22 @@ public abstract partial class Entity
         //执行生命和周期
         component.Awake();
         component.Start();
-        component.Enable = true;
+        component.Enable = component.DefaultEnable;
+
+        return component;
+    }
+
+    public T AddComponent<T>(object initData) where T : Component
+    {
+        var component = Activator.CreateInstance<T>();
+        component.Entity = this;
+        component.IsDisposed = false;
+        Components.Add(typeof(T), component);
+
+        //执行生命和周期
+        component.Awake(initData);
+        component.Start(initData);
+        component.Enable = component.DefaultEnable;
 
         return component;
     }
@@ -152,6 +168,19 @@ public abstract partial class Entity
         return null;
     }
 
+    public bool TryGet<T>(out T component) where T : Component
+    {
+        if(Components.TryGetValue(typeof(T), out var c))
+        {
+            component = c as T;
+            return true;
+        }
+        component = null;
+        return false;
+    }
+
+    #endregion
+
     #region 处理子实体
     private void SetParent(Entity parent)
     {
@@ -161,6 +190,11 @@ public abstract partial class Entity
         OnSetParent(preParent, parent);
     }
 
+    /// <summary>
+    /// 用来由子实体向父实体添加新的组件
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <returns></returns>
     public T GetParent<T>() where T : Entity
     {
         return Parent as T;

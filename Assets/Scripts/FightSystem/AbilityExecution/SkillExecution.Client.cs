@@ -1,12 +1,15 @@
 /**********************************************************
-文件：Effect.cs
+文件：SkillExecution.Client.cs
 作者：auus
 邮箱：#Email#
-日期：2023/03/17 14:46:37
+日期：2023/03/20 16:57:15
 功能：Nothing
 /**********************************************************/
 
-public abstract class Effect
+/// <summary>
+/// 技能执行体
+/// </summary>
+public partial class SkillExecution
 {
-    public EffectTriggerType TriggerType { get; set; }
+
 }

@@ -13,6 +13,8 @@ public interface IAbilityEntity
 {
     public bool Enable { get; set; }
 
+    public CombatEntity OwnerEntity { get; set; }
+
     /// <summary>
     /// 尝试激活能力
     /// </summary>
@@ -32,4 +34,6 @@ public interface IAbilityEntity
     /// 结束能力
     /// </summary>
     public void EndAbility();
+
+    //public AbilityEffect
 }
