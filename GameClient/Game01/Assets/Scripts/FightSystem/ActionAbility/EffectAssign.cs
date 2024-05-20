@@ -61,6 +61,11 @@ public class EffectAssignAction : Entity, IActionExecution
     public IActionExecution TargetAction { get; set; }
 
     /// <summary>
+    /// 父级技能效果
+    /// </summary>
+    public AbilityEffect AbilityEffect { get; set; }
+
+    /// <summary>
     /// 前置处理
     /// </summary>
     private void PreProcess()
@@ -87,5 +92,11 @@ public class EffectAssignAction : Entity, IActionExecution
     public void ApplyEffectAssign()
     {
         PreProcess();
+
+        AbilityEffect.StartAssignEffect(this);
+
+        PostProcess();
+
+        FinishAction();
     }
 }

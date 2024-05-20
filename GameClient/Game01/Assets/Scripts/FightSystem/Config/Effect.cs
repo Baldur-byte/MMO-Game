@@ -8,4 +8,5 @@
 
 public abstract class Effect
 {
+    public EffectTriggerType TriggerType { get; set; }
 }

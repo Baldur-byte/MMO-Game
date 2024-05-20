@@ -14,36 +14,46 @@ using System.Collections.Generic;
 /// </summary>
 public class EventComponent : Component
 {
-    private Dictionary<Type, List<object>> TypeEvent2ActionLists = new Dictionary<Type, List<object>>();
-
-    //private Dictionary<string, List<object>> 
+    private Dictionary<string, List<object>> EventNameToActionLists = new Dictionary<string, List<object>>();
+    //private Dictionary<string, List<object>> EventNameToActionLists = new Dictionary<string, List<object>>();
 
     public new T Publish<T>(T TEvent) where T : class
     {
-        if(TypeEvent2ActionLists.TryGetValue(typeof(T), out List<object> list))
+        if(EventNameToActionLists.TryGetValue(typeof(T).Name, out List<object> list))
         {
             foreach(Action<T> item in list)
             {
-                item.Invoke(TEvent);
+                item.Invoke(TEvent); 
             }
         }
         return TEvent;
     }
 
+    public void Execute<T>(string eventName, T TEvent) where T : class
+    {
+        if (EventNameToActionLists.TryGetValue(eventName, out List<object> list))
+        {
+            foreach (Action<T> item in list)
+            {
+                item.Invoke(TEvent);
+            }
+        }
+    }
+
     public void Subscribe<T>(Action<T> action) where T : class
     {
-        var type = typeof(T);
-        if(!TypeEvent2ActionLists.TryGetValue((Type)type, out List<object> list))
+        var name = typeof(T).Name;
+        if(!EventNameToActionLists.TryGetValue(name, out List<object> list))
         {
             list = new List<object>();
-            TypeEvent2ActionLists.Add(type, list);
+            EventNameToActionLists.Add(name, list);
         }
         list.Add(action);
     }
 
     public void UnSubscribe<T>(Action<T> action) where T : class
     {
-        if(TypeEvent2ActionLists.TryGetValue(typeof(T), out var list))
+        if(EventNameToActionLists.TryGetValue(typeof(T).Name, out var list))
         {
             list.Remove(action);
         }
